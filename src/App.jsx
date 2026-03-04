@@ -343,7 +343,7 @@ function pickSideDish(meal, dislikedNames) {
 function TagBadge({ tag }) {
   const MAP = { "時短":{ bg:"#fff3e0", fg:"#e65100", icon:"⚡" }, "レンジ":{ bg:"#fce4ec", fg:"#c62828", icon:"📡" }, "炊飯器":{ bg:"#e8eaf6", fg:"#283593", icon:"🍚" }, "作り置き":{ bg:"#e0f2f1", fg:"#00695c", icon:"🧊" }, "冷凍OK":{ bg:"#e3f2fd", fg:"#1565c0", icon:"❄️" } };
   const s = MAP[tag] || { bg:"#f5f5f5", fg:"#666", icon:"🏷" };
-  return <span style={{ fontSize:10, padding:"2px 7px", borderRadius:6, background:s.bg, color:s.fg, fontWeight:700, display:"inline-flex", alignItems:"center", gap:2 }}>{s.icon} {tag}</span>;
+  return <span style={{ fontSize:12, padding:"3px 9px", borderRadius:6, background:s.bg, color:s.fg, fontWeight:700, display:"inline-flex", alignItems:"center", gap:3 }}>{s.icon} {tag}</span>;
 }
 
 /** 栄養バー — DEC-006: locked=true のときぼかし表示 */
@@ -354,15 +354,15 @@ function NutritionBar({ label, current, target, color, unit, locked }) {
       <div style={{ marginBottom:10, position:"relative" }}>
         <div style={{ filter:"blur(4px)", opacity:.4 }}>
           <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
-            <span style={{ fontSize:11, color:COLOR.textSub, fontWeight:600 }}>{label}</span>
-            <span style={{ fontSize:11, color:COLOR.textSub, fontWeight:700 }}>??{unit}/??{unit}</span>
+            <span style={{ fontSize:13, color:COLOR.textSub, fontWeight:600 }}>{label}</span>
+            <span style={{ fontSize:13, color:COLOR.textSub, fontWeight:700 }}>??{unit}/??{unit}</span>
           </div>
           <div style={{ height:7, borderRadius:4, background:COLOR.warm, overflow:"hidden" }}>
             <div style={{ width:"60%", height:"100%", borderRadius:4, background:color }} />
           </div>
         </div>
         <div style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"center" }}>
-          <span style={{ fontSize:9, color:COLOR.premium, fontWeight:700, background:"#fff", padding:"1px 8px", borderRadius:4 }}>🔒 プレミアム</span>
+          <span style={{ fontSize:11, color:COLOR.premium, fontWeight:700, background:"#fff", padding:"2px 10px", borderRadius:4 }}>🔒 プレミアム</span>
         </div>
       </div>
     );
@@ -370,8 +370,8 @@ function NutritionBar({ label, current, target, color, unit, locked }) {
   return (
     <div style={{ marginBottom:10 }}>
       <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
-        <span style={{ fontSize:11, color:COLOR.textSub, fontWeight:600 }}>{label}</span>
-        <span style={{ fontSize:11, color: current > target * 1.1 ? "#c44" : COLOR.text, fontWeight:700 }}>{current}{unit}/{target}{unit}</span>
+        <span style={{ fontSize:13, color:COLOR.textSub, fontWeight:600 }}>{label}</span>
+        <span style={{ fontSize:13, color: current > target * 1.1 ? "#c44" : COLOR.text, fontWeight:700 }}>{current}{unit}/{target}{unit}</span>
       </div>
       <div style={{ height:7, borderRadius:4, background:COLOR.warm, overflow:"hidden" }}>
         <div style={{ width:`${pct}%`, height:"100%", borderRadius:4, background: current > target * 1.1 ? "#c44" : color, transition:"width .6s" }} />
@@ -387,7 +387,7 @@ function PremiumGate({ children, isPremium }) {
       <div style={{ filter:"blur(3px)", pointerEvents:"none", opacity:.5 }}>{children}</div>
       <div style={{ position:"absolute", inset:0, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", borderRadius:16, background:"rgba(255,255,255,.75)" }}>
         <span style={{ fontSize:28, marginBottom:6 }}>🔒</span>
-        <span style={{ fontSize:13, fontWeight:800, color:COLOR.text }}>プレミアム限定</span>
+        <span style={{ fontSize:14, fontWeight:800, color:COLOR.text }}>プレミアム限定</span>
       </div>
     </div>
   );
@@ -396,20 +396,19 @@ function PremiumGate({ children, isPremium }) {
 /** PY-CTA: 共通の「無料で試す」ボタン */
 function TrialCTA({ onClick, label }) {
   return (
-    <button onClick={onClick} style={{ width:"100%", padding:"10px", borderRadius:10, border:"none", background:`linear-gradient(135deg,${COLOR.accent},#e8913a)`, color:"#fff", fontSize:12, fontWeight:800, cursor:"pointer", fontFamily:FONT }}>
+    <button onClick={onClick} style={{ width:"100%", padding:"12px", borderRadius:10, border:"none", background:`linear-gradient(135deg,${COLOR.accent},#e8913a)`, color:"#fff", fontSize:14, fontWeight:800, cursor:"pointer", fontFamily:FONT }}>
       {label || "14日間 無料で試す →"}
     </button>
   );
 }
 
-/** 食事カード — MP-03: 無料=Step1チラ見せ + PY-05ロック */
+/** 食事カード — v0.7.4: フォント引き上げ＋レシピタイトル＋副菜位置修正 */
 function MealCard({ mealType, meal, emoji, isPremium, dislikedNames, onAddExtra, onTrial }) {
   const [expanded, setExpanded] = useState(false);
   const LABELS = { breakfast:"朝食", lunch:"昼食", dinner:"夕食", snack:"補食" };
   const COLORS = { breakfast:"#e8913a", lunch:COLOR.green, dinner:COLOR.blue, snack:"#9b6b9e" };
   const recipe = getRecipe(meal.name);
 
-  /* 無料ユーザーもタップでStep1を見られる */
   function handleTap() { setExpanded(!expanded); }
 
   function handleSide() {
@@ -422,15 +421,15 @@ function MealCard({ mealType, meal, emoji, isPremium, dislikedNames, onAddExtra,
       <div onClick={handleTap} style={{ padding:"14px 16px", cursor:"pointer" }}>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:6 }}>
           <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-            <span style={{ fontSize:20 }}>{emoji}</span>
-            <span style={{ fontSize:9, fontWeight:800, color:COLORS[mealType], background:COLORS[mealType]+"12", padding:"2px 7px", borderRadius:5 }}>{LABELS[mealType]}</span>
+            <span style={{ fontSize:22 }}>{emoji}</span>
+            <span style={{ fontSize:11, fontWeight:800, color:COLORS[mealType], background:COLORS[mealType]+"12", padding:"3px 9px", borderRadius:5 }}>{LABELS[mealType]}</span>
           </div>
           <div style={{ display:"flex", alignItems:"center", gap:6 }}>
-            {meal.min > 0 && <span style={{ fontSize:10, fontWeight:700, color: meal.min <= 10 ? "#e65100" : COLOR.textSub }}>⏱{meal.min}分</span>}
-            <span style={{ fontSize:14, color:COLOR.textSub, transform: expanded ? "rotate(180deg)" : "none", transition:"transform .2s" }}>▾</span>
+            {meal.min > 0 && <span style={{ fontSize:12, fontWeight:700, color: meal.min <= 10 ? "#e65100" : COLOR.textSub }}>⏱{meal.min}分</span>}
+            <span style={{ fontSize:16, color:COLOR.textSub, transform: expanded ? "rotate(180deg)" : "none", transition:"transform .2s" }}>▾</span>
           </div>
         </div>
-        <p style={{ fontSize:13, fontWeight:700, color:COLOR.text, margin:"0 0 6px", lineHeight:1.5 }}>{meal.name}</p>
+        <p style={{ fontSize:15, fontWeight:700, color:COLOR.text, margin:"0 0 6px", lineHeight:1.5 }}>{meal.name}</p>
         {meal.tags.length > 0 && (
           <div style={{ display:"flex", gap:4, flexWrap:"wrap", marginBottom:8 }}>
             {meal.tags.map((t, i) => <TagBadge key={i} tag={t} />)}
@@ -438,97 +437,102 @@ function MealCard({ mealType, meal, emoji, isPremium, dislikedNames, onAddExtra,
         )}
         <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
           {[{ l:`${meal.cal}kcal`, c:"#e8913a" }, { l:`P${meal.p}g`, c:COLOR.accent }, { l:`C${meal.c}g`, c:COLOR.green }, { l:`F${meal.f}g`, c:COLOR.blue }].map((t, i) => (
-            <span key={i} style={{ fontSize:9, padding:"2px 7px", borderRadius:5, background:t.c+"10", color:t.c, fontWeight:700 }}>{t.l}</span>
+            <span key={i} style={{ fontSize:11, padding:"3px 8px", borderRadius:5, background:t.c+"10", color:t.c, fontWeight:700 }}>{t.l}</span>
           ))}
         </div>
-        {/* 副菜（Premium展開済みのみ表示） */}
-        {meal.extra && (
-          <div style={{ marginTop:10, padding:"10px 12px", borderRadius:10, background:COLOR.greenLight, border:`1px solid ${COLOR.green}20` }}>
-            <div style={{ display:"flex", alignItems:"center", gap:4, marginBottom:4 }}>
-              <span style={{ fontSize:12 }}>🥗</span>
-              <span style={{ fontSize:10, fontWeight:800, color:COLOR.green }}>副菜：{meal.extra.name}</span>
-              <span style={{ fontSize:9, color:COLOR.green, opacity:.7 }}>+{meal.extra.cal}kcal</span>
-            </div>
-            <div style={{ fontSize:10, color:COLOR.green, marginBottom:4 }}>{meal.extra.reason}</div>
-            <div style={{ fontSize:10, color:COLOR.green, background:"#fff", padding:"6px 8px", borderRadius:6, lineHeight:1.5 }}>📝 {meal.extra.steps}</div>
-          </div>
-        )}
       </div>
 
       {/* ── レシピ展開エリア ── */}
       {expanded && (
         <div style={{ padding:"0 16px 14px", borderTop:`1px solid ${COLOR.border}` }}>
           <div style={{ paddingTop:12 }}>
+            {/* レシピタイトル（展開時に再表示） */}
+            <div style={{ fontSize:14, fontWeight:800, color:COLORS[mealType], marginBottom:10 }}>📝 {meal.name}</div>
+
             {recipe ? (
               <div>
                 {/* DEC-007: 材料リスト（無料でも全表示） */}
                 <div style={{ marginBottom:12, padding:"10px 12px", borderRadius:10, background:COLOR.warm }}>
-                  <div style={{ display:"flex", alignItems:"baseline", gap:6, marginBottom:6 }}><span style={{ fontSize:10, fontWeight:800, color:COLOR.textSub }}>🥄 材料（1人分）</span><span style={{ fontSize:9, color:COLOR.textSub, opacity:.7 }}>※買い物リストで人数分に調整</span></div>
+                  <div style={{ display:"flex", alignItems:"baseline", gap:6, marginBottom:6 }}><span style={{ fontSize:12, fontWeight:800, color:COLOR.textSub }}>🥄 材料（1人分）</span><span style={{ fontSize:11, color:COLOR.textSub, opacity:.7 }}>※買い物リストで人数分に調整</span></div>
                   <div style={{ display:"flex", flexWrap:"wrap", gap:4 }}>
                     {meal.items.map((item, i) => (
-                      <span key={i} style={{ fontSize:11, color:COLOR.text, background:COLOR.card, padding:"3px 8px", borderRadius:6, border:`1px solid ${COLOR.border}`, lineHeight:1.4 }}>
+                      <span key={i} style={{ fontSize:12, color:COLOR.text, background:COLOR.card, padding:"4px 9px", borderRadius:6, border:`1px solid ${COLOR.border}`, lineHeight:1.4 }}>
                         {item.n} <span style={{ fontWeight:700, color:COLOR.accent }}>{formatQty(item.q)}{item.u}</span>
                       </span>
                     ))}
                   </div>
                 </div>
+
+                {/* 作り方ラベル */}
+                <div style={{ fontSize:12, fontWeight:800, color:COLOR.textSub, marginBottom:8 }}>🔪 作り方</div>
+
                 {/* Step 1 は常に表示（無料チラ見せ） */}
                 <div style={{ display:"flex", gap:8, marginBottom:8 }}>
-                  <div style={{ width:22, height:22, borderRadius:6, flexShrink:0, background:COLOR.accent+"12", color:COLOR.accent, fontSize:10, fontWeight:800, display:"flex", alignItems:"center", justifyContent:"center" }}>1</div>
-                  <div style={{ fontSize:12, color:COLOR.text, lineHeight:1.6, paddingTop:2 }}>{recipe.steps[0]}</div>
+                  <div style={{ width:24, height:24, borderRadius:6, flexShrink:0, background:COLOR.accent+"12", color:COLOR.accent, fontSize:11, fontWeight:800, display:"flex", alignItems:"center", justifyContent:"center" }}>1</div>
+                  <div style={{ fontSize:13, color:COLOR.text, lineHeight:1.7, paddingTop:2 }}>{recipe.steps[0]}</div>
                 </div>
 
                 {isPremium ? (
                   <>
-                    {/* Premium: Step 2以降＋Tips＋作り置きメモ */}
                     {recipe.steps.slice(1).map((s, i) => (
                       <div key={i+1} style={{ display:"flex", gap:8, marginBottom:8 }}>
-                        <div style={{ width:22, height:22, borderRadius:6, flexShrink:0, background:COLOR.accent+"12", color:COLOR.accent, fontSize:10, fontWeight:800, display:"flex", alignItems:"center", justifyContent:"center" }}>{i+2}</div>
-                        <div style={{ fontSize:12, color:COLOR.text, lineHeight:1.6, paddingTop:2 }}>{s}</div>
+                        <div style={{ width:24, height:24, borderRadius:6, flexShrink:0, background:COLOR.accent+"12", color:COLOR.accent, fontSize:11, fontWeight:800, display:"flex", alignItems:"center", justifyContent:"center" }}>{i+2}</div>
+                        <div style={{ fontSize:13, color:COLOR.text, lineHeight:1.7, paddingTop:2 }}>{s}</div>
                       </div>
                     ))}
                     {recipe.tips && (
-                      <div style={{ padding:"8px 12px", borderRadius:8, background:COLOR.greenLight, border:`1px solid ${COLOR.green}20`, marginTop:4, marginBottom:6 }}>
-                        <span style={{ fontSize:10, fontWeight:700, color:COLOR.green }}>💡 </span>
-                        <span style={{ fontSize:11, color:COLOR.green }}>{recipe.tips}</span>
+                      <div style={{ padding:"10px 12px", borderRadius:8, background:COLOR.greenLight, border:`1px solid ${COLOR.green}20`, marginTop:6, marginBottom:8 }}>
+                        <span style={{ fontSize:12, fontWeight:700, color:COLOR.green }}>💡 コツ：</span>
+                        <span style={{ fontSize:13, color:COLOR.green, lineHeight:1.6 }}>{recipe.tips}</span>
                       </div>
                     )}
                     {recipe.makeAhead && (
-                      <div style={{ padding:"8px 12px", borderRadius:8, background:"#e3f2fd", border:"1px solid #bbdefb" }}>
-                        <span style={{ fontSize:10, fontWeight:700, color:"#1565c0" }}>🧊 </span>
-                        <span style={{ fontSize:11, color:"#1565c0" }}>{recipe.makeAhead}</span>
+                      <div style={{ padding:"10px 12px", borderRadius:8, background:"#e3f2fd", border:"1px solid #bbdefb" }}>
+                        <span style={{ fontSize:12, fontWeight:700, color:"#1565c0" }}>🧊 作り置き：</span>
+                        <span style={{ fontSize:13, color:"#1565c0", lineHeight:1.6 }}>{recipe.makeAhead}</span>
                       </div>
                     )}
                   </>
                 ) : (
-                  /* PY-05: 無料ユーザー → Step1の後にロック＋CTA */
                   <div style={{ marginTop:4, padding:"14px 12px", borderRadius:10, background:COLOR.premium+"06", border:`1px dashed ${COLOR.premium}30`, textAlign:"center" }}>
-                    <div style={{ fontSize:11, fontWeight:700, color:COLOR.premium, marginBottom:8 }}>📝 続きのレシピ＋時短コツを見る</div>
+                    <div style={{ fontSize:13, fontWeight:700, color:COLOR.premium, marginBottom:8 }}>📝 続きのレシピ＋時短コツを見る</div>
                     <TrialCTA onClick={onTrial} label="無料で試す" />
                   </div>
                 )}
               </div>
             ) : (
               <div>
-                {/* レシピ未登録でも材料は表示 */}
                 <div style={{ marginBottom:10, padding:"10px 12px", borderRadius:10, background:COLOR.warm }}>
-                  <div style={{ display:"flex", alignItems:"baseline", gap:6, marginBottom:6 }}><span style={{ fontSize:10, fontWeight:800, color:COLOR.textSub }}>🥄 材料（1人分）</span><span style={{ fontSize:9, color:COLOR.textSub, opacity:.7 }}>※買い物リストで人数分に調整</span></div>
+                  <div style={{ display:"flex", alignItems:"baseline", gap:6, marginBottom:6 }}><span style={{ fontSize:12, fontWeight:800, color:COLOR.textSub }}>🥄 材料（1人分）</span><span style={{ fontSize:11, color:COLOR.textSub, opacity:.7 }}>※買い物リストで人数分に調整</span></div>
                   <div style={{ display:"flex", flexWrap:"wrap", gap:4 }}>
                     {meal.items.map((item, i) => (
-                      <span key={i} style={{ fontSize:11, color:COLOR.text, background:COLOR.card, padding:"3px 8px", borderRadius:6, border:`1px solid ${COLOR.border}`, lineHeight:1.4 }}>
+                      <span key={i} style={{ fontSize:12, color:COLOR.text, background:COLOR.card, padding:"4px 9px", borderRadius:6, border:`1px solid ${COLOR.border}`, lineHeight:1.4 }}>
                         {item.n} <span style={{ fontWeight:700, color:COLOR.accent }}>{formatQty(item.q)}{item.u}</span>
                       </span>
                     ))}
                   </div>
                 </div>
-                <div style={{ fontSize:12, color:COLOR.textSub }}>レシピ準備中</div>
+                <div style={{ fontSize:13, color:COLOR.textSub }}>レシピ準備中</div>
               </div>
             )}
           </div>
 
+          {/* 副菜表示（レシピの後に配置 — v0.7.4で移動） */}
+          {meal.extra && (
+            <div style={{ marginTop:12, padding:"12px 14px", borderRadius:10, background:COLOR.greenLight, border:`1px solid ${COLOR.green}20` }}>
+              <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:6 }}>
+                <span style={{ fontSize:14 }}>🥗</span>
+                <span style={{ fontSize:13, fontWeight:800, color:COLOR.green }}>副菜：{meal.extra.name}</span>
+                <span style={{ fontSize:11, color:COLOR.green, opacity:.7 }}>+{meal.extra.cal}kcal</span>
+              </div>
+              <div style={{ fontSize:12, color:COLOR.green, marginBottom:6 }}>{meal.extra.reason}</div>
+              <div style={{ fontSize:12, color:COLOR.green, background:"#fff", padding:"8px 10px", borderRadius:8, lineHeight:1.6 }}>📝 {meal.extra.steps}</div>
+            </div>
+          )}
+
           {/* 副菜追加ボタン（Premiumのみ） */}
           {isPremium && !meal.extra && (
-            <button onClick={e => { e.stopPropagation(); handleSide(); }} style={{ width:"100%", marginTop:10, padding:"10px", borderRadius:10, border:`1.5px dashed ${COLOR.green}40`, background:COLOR.green+"06", fontSize:12, fontWeight:700, color:COLOR.green, cursor:"pointer", fontFamily:FONT }}>
+            <button onClick={e => { e.stopPropagation(); handleSide(); }} style={{ width:"100%", marginTop:12, padding:"12px", borderRadius:10, border:`1.5px dashed ${COLOR.green}40`, background:COLOR.green+"06", fontSize:13, fontWeight:700, color:COLOR.green, cursor:"pointer", fontFamily:FONT }}>
               🥗 副菜を追加する
             </button>
           )}
@@ -641,15 +645,15 @@ export default function App() {
             <div style={{ width:32, height:32, borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center", background:`linear-gradient(135deg,${COLOR.accent},#e8913a)`, fontSize:16 }}>🍙</div>
             <div>
               <div style={{ fontSize:15, fontWeight:900, color:COLOR.text }}>アスメシ</div>
-              <div style={{ fontSize:7, color:COLOR.textSub }}>v0.7.3</div>
+              <div style={{ fontSize:9, color:COLOR.textSub }}>v0.7.4</div>
             </div>
           </div>
           <div style={{ display:"flex", gap:5 }}>
-            <button onClick={() => setIsPremium(!isPremium)} style={{ padding:"4px 9px", borderRadius:16, fontSize:9, fontWeight:700, cursor:"pointer", border: isPremium ? "none" : `1px solid ${COLOR.premium}40`, fontFamily:FONT, background: isPremium ? "linear-gradient(135deg,#c49a14,#e8b914)" : "transparent", color: isPremium ? "#fff" : COLOR.premium }}>
+            <button onClick={() => setIsPremium(!isPremium)} style={{ padding:"5px 11px", borderRadius:16, fontSize:11, fontWeight:700, cursor:"pointer", border: isPremium ? "none" : `1px solid ${COLOR.premium}40`, fontFamily:FONT, background: isPremium ? "linear-gradient(135deg,#c49a14,#e8b914)" : "transparent", color: isPremium ? "#fff" : COLOR.premium }}>
               {isPremium ? "💎 ON" : "💎 OFF"}
             </button>
             {screen === "result" && (
-              <button onClick={() => { setScreen("onboarding"); setDailyPlan(null); setWeeklyPlan(null); setShowWeeklyWall(false); }} style={{ background:COLOR.warm, border:"none", padding:"4px 9px", borderRadius:8, fontSize:10, color:COLOR.textSub, cursor:"pointer", fontFamily:FONT, fontWeight:600 }}>
+              <button onClick={() => { setScreen("onboarding"); setDailyPlan(null); setWeeklyPlan(null); setShowWeeklyWall(false); }} style={{ background:COLOR.warm, border:"none", padding:"5px 11px", borderRadius:8, fontSize:12, color:COLOR.textSub, cursor:"pointer", fontFamily:FONT, fontWeight:600 }}>
                 ← 戻る
               </button>
             )}
@@ -662,32 +666,32 @@ export default function App() {
             <div style={{ textAlign:"center", padding:"24px 0 16px" }}>
               <div style={{ fontSize:40, marginBottom:6 }}>🏃‍♂️🍳</div>
               <h1 style={{ fontSize:20, fontWeight:900, color:COLOR.text, margin:"0 0 4px", lineHeight:1.4 }}>お子さんについて<br/>教えてください</h1>
-              <p style={{ fontSize:12, color:COLOR.textSub, margin:0 }}>最適な献立とレシピを提案します</p>
+              <p style={{ fontSize:13, color:COLOR.textSub, margin:0 }}>最適な献立とレシピを提案します</p>
             </div>
 
             {/* 競技 */}
             <div style={{ marginBottom:20 }}>
-              <label style={{ fontSize:12, fontWeight:800, color:COLOR.text, display:"block", marginBottom:6 }}>🏅 競技</label>
+              <label style={{ fontSize:13, fontWeight:800, color:COLOR.text, display:"block", marginBottom:6 }}>🏅 競技</label>
               <div style={{ display:"flex", flexWrap:"wrap", gap:6 }}>
                 {SPORTS.map(s => (
-                  <button key={s.id} onClick={() => setSportId(s.id)} style={{ padding:"8px 14px", borderRadius:20, border:`1.5px solid ${sportId === s.id ? "transparent" : COLOR.border}`, background: sportId === s.id ? COLOR.accent : "transparent", color: sportId === s.id ? "#fff" : COLOR.text, fontSize:12, fontWeight: sportId === s.id ? 700 : 500, cursor:"pointer", fontFamily:FONT }}>{s.emoji} {s.name}</button>
+                  <button key={s.id} onClick={() => setSportId(s.id)} style={{ padding:"8px 14px", borderRadius:20, border:`1.5px solid ${sportId === s.id ? "transparent" : COLOR.border}`, background: sportId === s.id ? COLOR.accent : "transparent", color: sportId === s.id ? "#fff" : COLOR.text, fontSize:13, fontWeight: sportId === s.id ? 700 : 500, cursor:"pointer", fontFamily:FONT }}>{s.emoji} {s.name}</button>
                 ))}
               </div>
             </div>
 
             {/* 年齢 */}
             <div style={{ marginBottom:20 }}>
-              <label style={{ fontSize:12, fontWeight:800, color:COLOR.text, display:"block", marginBottom:6 }}>📅 年齢</label>
+              <label style={{ fontSize:13, fontWeight:800, color:COLOR.text, display:"block", marginBottom:6 }}>📅 年齢</label>
               <div style={{ display:"flex", flexWrap:"wrap", gap:6 }}>
                 {AGES.map(a => (
-                  <button key={a.id} onClick={() => setAgeId(a.id)} style={{ padding:"8px 14px", borderRadius:20, border:`1.5px solid ${ageId === a.id ? "transparent" : COLOR.border}`, background: ageId === a.id ? COLOR.green : "transparent", color: ageId === a.id ? "#fff" : COLOR.text, fontSize:12, fontWeight: ageId === a.id ? 700 : 500, cursor:"pointer", fontFamily:FONT }}>{a.label}</button>
+                  <button key={a.id} onClick={() => setAgeId(a.id)} style={{ padding:"8px 14px", borderRadius:20, border:`1.5px solid ${ageId === a.id ? "transparent" : COLOR.border}`, background: ageId === a.id ? COLOR.green : "transparent", color: ageId === a.id ? "#fff" : COLOR.text, fontSize:13, fontWeight: ageId === a.id ? 700 : 500, cursor:"pointer", fontFamily:FONT }}>{a.label}</button>
                 ))}
               </div>
             </div>
 
             {needs && (
               <div style={{ background:COLOR.greenLight, borderRadius:12, padding:"10px 14px", marginBottom:20, border:`1px solid ${COLOR.green}20` }}>
-                <div style={{ fontSize:10, color:COLOR.green, fontWeight:700 }}>📊 推定1日</div>
+                <div style={{ fontSize:12, color:COLOR.green, fontWeight:700 }}>📊 推定1日</div>
                 <div style={{ display:"flex", gap:14 }}>
                   <span style={{ fontSize:18, fontWeight:900, color:COLOR.green }}>{needs.cal}kcal</span>
                   <span style={{ fontSize:13, fontWeight:700, color:COLOR.green }}>P {needs.protein}g</span>
@@ -697,15 +701,15 @@ export default function App() {
 
             {/* 苦手食材 */}
             <div style={{ marginBottom:20 }}>
-              <label style={{ fontSize:12, fontWeight:800, color:COLOR.text, display:"block", marginBottom:6 }}>
-                🙅 苦手な食材<span style={{ fontSize:10, fontWeight:500, color:COLOR.textSub, marginLeft:6 }}>{isPremium ? "無制限" : "3つまで"}</span>
+              <label style={{ fontSize:13, fontWeight:800, color:COLOR.text, display:"block", marginBottom:6 }}>
+                🙅 苦手な食材<span style={{ fontSize:12, fontWeight:500, color:COLOR.textSub, marginLeft:6 }}>{isPremium ? "無制限" : "3つまで"}</span>
               </label>
               <div style={{ display:"flex", flexWrap:"wrap", gap:6 }}>
                 {DISLIKE_LIST.map(d => {
                   const selected = dislikes.includes(d.id);
                   const disabled = !selected && dislikes.length >= 3 && !isPremium;
                   return (
-                    <button key={d.id} onClick={() => toggleDislike(d.id)} style={{ padding:"8px 12px", borderRadius:20, fontSize:12, fontFamily:FONT, cursor: disabled ? "pointer" : "pointer", border: selected ? "2px solid #c44" : `1.5px solid ${COLOR.border}`, background: selected ? "#fef2f2" : "transparent", color: selected ? "#c44" : COLOR.text, fontWeight: selected ? 700 : 500, opacity: disabled ? .5 : 1 }}>
+                    <button key={d.id} onClick={() => toggleDislike(d.id)} style={{ padding:"8px 12px", borderRadius:20, fontSize:13, fontFamily:FONT, cursor: disabled ? "pointer" : "pointer", border: selected ? "2px solid #c44" : `1.5px solid ${COLOR.border}`, background: selected ? "#fef2f2" : "transparent", color: selected ? "#c44" : COLOR.text, fontWeight: selected ? 700 : 500, opacity: disabled ? .5 : 1 }}>
                       {d.emoji} {d.label}{selected ? " ✕" : ""}
                     </button>
                   );
@@ -714,7 +718,7 @@ export default function App() {
               {/* PY-03: ソフトウォール */}
               {showDislikeWall && !isPremium && (
                 <div style={{ marginTop:8, padding:"12px 14px", borderRadius:12, background:COLOR.premium+"08", border:`1px solid ${COLOR.premium}20` }}>
-                  <div style={{ fontSize:11, fontWeight:700, color:COLOR.premium, marginBottom:8 }}>🙅 4つ以上の食材を除外するにはプレミアムが必要です</div>
+                  <div style={{ fontSize:13, fontWeight:700, color:COLOR.premium, marginBottom:8 }}>🙅 4つ以上の食材を除外するにはプレミアムが必要です</div>
                   <TrialCTA onClick={activateTrial} label="14日間 無料で試す" />
                 </div>
               )}
@@ -722,13 +726,13 @@ export default function App() {
 
             {/* 目標 */}
             <div style={{ marginBottom:24 }}>
-              <label style={{ fontSize:12, fontWeight:800, color:COLOR.text, display:"block", marginBottom:6 }}>🎯 目標</label>
+              <label style={{ fontSize:13, fontWeight:800, color:COLOR.text, display:"block", marginBottom:6 }}>🎯 目標</label>
               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
                 {GOALS.map(g => (
                   <button key={g.id} onClick={() => setGoalId(g.id)} style={{ padding:"12px 10px", borderRadius:12, textAlign:"left", fontFamily:FONT, border: goalId === g.id ? `2px solid ${COLOR.accent}` : `1.5px solid ${COLOR.border}`, background: goalId === g.id ? COLOR.accentLight : COLOR.card, cursor:"pointer" }}>
                     <div style={{ fontSize:20, marginBottom:2 }}>{g.emoji}</div>
                     <div style={{ fontSize:13, fontWeight:700, color:COLOR.text }}>{g.name}</div>
-                    <div style={{ fontSize:10, color:COLOR.textSub }}>{g.focus}</div>
+                    <div style={{ fontSize:12, color:COLOR.textSub }}>{g.focus}</div>
                   </button>
                 ))}
               </div>
@@ -747,10 +751,10 @@ export default function App() {
             <div style={{ margin:"12px 0 10px", padding:"10px 14px", borderRadius:12, background:COLOR.warm, display:"flex", alignItems:"center", gap:10 }}>
               <span style={{ fontSize:22 }}>{sportObj?.emoji}</span>
               <div>
-                <div style={{ fontSize:13, fontWeight:800, color:COLOR.text }}>{sportObj?.name}・{ageObj?.label}</div>
+                <div style={{ fontSize:14, fontWeight:800, color:COLOR.text }}>{sportObj?.name}・{ageObj?.label}</div>
                 <div style={{ display:"flex", gap:6 }}>
-                  <span style={{ fontSize:11, color:COLOR.accent, fontWeight:600 }}>{goalObj?.emoji} {goalObj?.name}</span>
-                  {dislikes.length > 0 && <span style={{ fontSize:10, color:"#c44", fontWeight:600 }}>🚫{dislikes.map(d => DISLIKE_LIST.find(x => x.id === d)?.label).join("・")}</span>}
+                  <span style={{ fontSize:12, color:COLOR.accent, fontWeight:600 }}>{goalObj?.emoji} {goalObj?.name}</span>
+                  {dislikes.length > 0 && <span style={{ fontSize:12, color:"#c44", fontWeight:600 }}>🚫{dislikes.map(d => DISLIKE_LIST.find(x => x.id === d)?.label).join("・")}</span>}
                 </div>
               </div>
             </div>
@@ -758,8 +762,8 @@ export default function App() {
             {/* PY-02: インライン提案（初回のみ） */}
             {!isPremium && isFirstResult && (
               <div style={{ marginBottom:12, padding:"12px 14px", borderRadius:12, background:COLOR.accentLight, border:`1px solid ${COLOR.accent}20`, display:"flex", alignItems:"center", justifyContent:"space-between", gap:8 }}>
-                <div style={{ fontSize:11, color:COLOR.accent, fontWeight:600, lineHeight:1.5 }}>🍽️ 献立ができました！<br/>レシピも見たい場合は →</div>
-                <button onClick={activateTrial} style={{ flexShrink:0, padding:"8px 14px", borderRadius:10, border:"none", background:`linear-gradient(135deg,${COLOR.accent},#e8913a)`, color:"#fff", fontSize:10, fontWeight:800, cursor:"pointer", fontFamily:FONT, whiteSpace:"nowrap" }}>14日間 無料おためし</button>
+                <div style={{ fontSize:12, color:COLOR.accent, fontWeight:600, lineHeight:1.5 }}>🍽️ 献立ができました！<br/>レシピも見たい場合は →</div>
+                <button onClick={activateTrial} style={{ flexShrink:0, padding:"8px 14px", borderRadius:10, border:"none", background:`linear-gradient(135deg,${COLOR.accent},#e8913a)`, color:"#fff", fontSize:11, fontWeight:800, cursor:"pointer", fontFamily:FONT, whiteSpace:"nowrap" }}>14日間 無料おためし</button>
               </div>
             )}
 
@@ -768,16 +772,16 @@ export default function App() {
               <div style={{ marginBottom:12, padding:"20px 16px", borderRadius:14, background:COLOR.card, border:`2px solid ${COLOR.accent}30`, textAlign:"center" }}>
                 <div style={{ fontSize:32, marginBottom:6 }}>📅</div>
                 <div style={{ fontSize:14, fontWeight:800, color:COLOR.text, marginBottom:4 }}>1週間まとめて献立を作れます</div>
-                <div style={{ fontSize:11, color:COLOR.textSub, marginBottom:12 }}>毎日考えなくてOK。買い物リストも自動で出ます</div>
+                <div style={{ fontSize:12, color:COLOR.textSub, marginBottom:12 }}>毎日考えなくてOK。買い物リストも自動で出ます</div>
                 <TrialCTA onClick={activateTrial} label="無料で始める（14日間）" />
-                <button onClick={() => setShowWeeklyWall(false)} style={{ marginTop:8, background:"none", border:"none", fontSize:10, color:COLOR.textSub, cursor:"pointer", fontFamily:FONT }}>閉じる</button>
+                <button onClick={() => setShowWeeklyWall(false)} style={{ marginTop:8, background:"none", border:"none", fontSize:12, color:COLOR.textSub, cursor:"pointer", fontFamily:FONT }}>閉じる</button>
               </div>
             )}
 
             {/* タブ */}
             <div style={{ display:"flex", gap:3, marginBottom:12, background:"#e5e2dc", borderRadius:10, padding:3 }}>
               {[{ id:"meal", l:"🍽 今日" }, { id:"list", l:"🛒 買物" }, { id:"weekly", l:"📅 週間" }].map(t => (
-                <button key={t.id} onClick={() => handleTabChange(t.id)} style={{ flex:1, padding:"8px 4px", border:"none", borderRadius:8, fontSize:12, fontWeight: tab === t.id ? 700 : 500, fontFamily:FONT, cursor:"pointer", background: tab === t.id ? "#fff" : "transparent", color: tab === t.id ? COLOR.text : COLOR.textSub }}>{t.l}</button>
+                <button key={t.id} onClick={() => handleTabChange(t.id)} style={{ flex:1, padding:"8px 4px", border:"none", borderRadius:8, fontSize:13, fontWeight: tab === t.id ? 700 : 500, fontFamily:FONT, cursor:"pointer", background: tab === t.id ? "#fff" : "transparent", color: tab === t.id ? COLOR.text : COLOR.textSub }}>{t.l}</button>
               ))}
             </div>
 
@@ -786,19 +790,19 @@ export default function App() {
               <div>
                 {/* DEC-006: 栄養バー（無料=カロリーのみ、P/C/Fロック） */}
                 <div style={{ background:COLOR.card, borderRadius:14, padding:14, marginBottom:12, border:`1px solid ${COLOR.border}` }}>
-                  <div style={{ fontSize:12, fontWeight:800, color:COLOR.text, marginBottom:10 }}>📊 栄養バランス</div>
+                  <div style={{ fontSize:13, fontWeight:800, color:COLOR.text, marginBottom:10 }}>📊 栄養バランス</div>
                   <NutritionBar label="エネルギー" current={sumNutrition(dailyPlan).cal} target={needs?.cal || 2000} color={COLOR.accent} unit="kcal" locked={false} />
                   <NutritionBar label="タンパク質" current={sumNutrition(dailyPlan).p}   target={needs?.protein || 60} color="#c4652e" unit="g" locked={!isPremium} />
                   <NutritionBar label="炭水化物"   current={sumNutrition(dailyPlan).c}   target={Math.round((needs?.cal || 2000) * .55 / 4)} color={COLOR.green} unit="g" locked={!isPremium} />
                   <NutritionBar label="脂質"       current={sumNutrition(dailyPlan).f}   target={Math.round((needs?.cal || 2000) * .25 / 9)} color={COLOR.blue} unit="g" locked={!isPremium} />
                 </div>
-                {isPremium && <div style={{ padding:"8px 12px", marginBottom:12, borderRadius:10, background:COLOR.accent+"08", fontSize:11, color:COLOR.accent, fontWeight:600 }}>✨ タップ → レシピ即表示＆副菜提案</div>}
+                {isPremium && <div style={{ padding:"8px 12px", marginBottom:12, borderRadius:10, background:COLOR.accent+"08", fontSize:12, color:COLOR.accent, fontWeight:600 }}>✨ タップ → レシピ即表示＆副菜提案</div>}
                 <div style={{ display:"flex", flexDirection:"column", gap:10, marginBottom:12 }}>
                   {MEAL_TYPES.map(([k, e]) => (
                     <MealCard key={k} mealType={k} meal={dailyPlan[k]} emoji={e} isPremium={isPremium} dislikedNames={dislikedNames} onAddExtra={handleAddExtra} onTrial={activateTrial} />
                   ))}
                 </div>
-                <button onClick={handleRegenerate} disabled={loading} style={{ width:"100%", padding:"12px", borderRadius:12, border:`1.5px solid ${COLOR.border}`, background:COLOR.card, fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:FONT, color:COLOR.text }}>
+                <button onClick={handleRegenerate} disabled={loading} style={{ width:"100%", padding:"12px", borderRadius:12, border:`1.5px solid ${COLOR.border}`, background:COLOR.card, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:FONT, color:COLOR.text }}>
                   {loading ? "🔄 生成中..." : "🔄 別の献立にする"}
                 </button>
               </div>
@@ -809,25 +813,25 @@ export default function App() {
               <PremiumGate isPremium={isPremium}>
                 <div style={{ background:COLOR.card, borderRadius:14, padding:16, border:`1px solid ${COLOR.green}20` }}>
                   <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:14, padding:"10px 12px", borderRadius:12, background:COLOR.greenLight }}>
-                    <div style={{ fontSize:12, fontWeight:800, color:COLOR.green }}>👨‍👩‍👧‍👦 何人分？</div>
+                    <div style={{ fontSize:13, fontWeight:800, color:COLOR.green }}>👨‍👩‍👧‍👦 何人分？</div>
                     <div style={{ display:"flex", alignItems:"center", gap:6 }}>
                       <button onClick={() => setServings(Math.max(1, servings - 1))} style={{ width:30, height:30, borderRadius:8, border:`1px solid ${COLOR.green}40`, background:"#fff", fontSize:16, cursor:"pointer", color:COLOR.green, fontWeight:700 }}>−</button>
                       <span style={{ fontSize:20, fontWeight:900, color:COLOR.green, minWidth:30, textAlign:"center" }}>{servings}</span>
                       <button onClick={() => setServings(Math.min(8, servings + 1))} style={{ width:30, height:30, borderRadius:8, border:`1px solid ${COLOR.green}40`, background:"#fff", fontSize:16, cursor:"pointer", color:COLOR.green, fontWeight:700 }}>+</button>
-                      <span style={{ fontSize:11, color:COLOR.green, fontWeight:700 }}>人分</span>
+                      <span style={{ fontSize:12, color:COLOR.green, fontWeight:700 }}>人分</span>
                     </div>
                   </div>
                   {Object.entries(buildShoppingList(weeklyPlan || dailyPlan, servings)).map(([cat, items]) =>
                     items.length > 0 && (
                       <div key={cat} style={{ marginBottom:14 }}>
-                        <div style={{ fontSize:11, fontWeight:700, color:COLOR.textSub, marginBottom:4, paddingBottom:3, borderBottom:`1px solid ${COLOR.border}` }}>{cat}</div>
+                        <div style={{ fontSize:12, fontWeight:700, color:COLOR.textSub, marginBottom:4, paddingBottom:3, borderBottom:`1px solid ${COLOR.border}` }}>{cat}</div>
                         {items.map((it, j) => {
                           const key = cat + it.n;
                           return (
                             <label key={j} style={{ display:"flex", alignItems:"center", gap:8, padding:"7px 10px", borderRadius:8, cursor:"pointer", background: checked[key] ? COLOR.greenLight : "transparent" }}>
                               <input type="checkbox" checked={!!checked[key]} onChange={() => setChecked(p => ({ ...p, [key]: !p[key] }))} style={{ width:16, height:16, accentColor:COLOR.green }} />
-                              <span style={{ flex:1, fontSize:12, color: checked[key] ? COLOR.textSub : COLOR.text, textDecoration: checked[key] ? "line-through" : "none" }}>{it.n}</span>
-                              <span style={{ fontSize:12, fontWeight:700, color: checked[key] ? COLOR.textSub : COLOR.accent, textDecoration: checked[key] ? "line-through" : "none" }}>{formatQty(it.q)} {it.u}</span>
+                              <span style={{ flex:1, fontSize:13, color: checked[key] ? COLOR.textSub : COLOR.text, textDecoration: checked[key] ? "line-through" : "none" }}>{it.n}</span>
+                              <span style={{ fontSize:13, fontWeight:700, color: checked[key] ? COLOR.textSub : COLOR.accent, textDecoration: checked[key] ? "line-through" : "none" }}>{formatQty(it.q)} {it.u}</span>
                             </label>
                           );
                         })}
@@ -855,12 +859,12 @@ export default function App() {
                       <div style={{ display:"flex", gap:4, marginBottom:12 }}>
                         {DAY_LABELS.map((d, i) => (
                           <button key={i} onClick={() => setWeekDay(i)} style={{ minWidth:44, padding:"10px 6px", borderRadius:10, border:"none", fontFamily:FONT, cursor:"pointer", background: weekDay === i ? COLOR.accent : "#fff", color: weekDay === i ? "#fff" : COLOR.text, fontSize:12, fontWeight: weekDay === i ? 800 : 500, display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
-                            <span style={{ fontSize:10, opacity:.7 }}>{d}</span><span>{i + 1}</span>
+                            <span style={{ fontSize:11, opacity:.7 }}>{d}</span>
                           </button>
                         ))}
                       </div>
                       <div style={{ background:COLOR.card, borderRadius:14, padding:14, marginBottom:12, border:`1px solid ${COLOR.border}` }}>
-                        <div style={{ fontSize:12, fontWeight:800, color:COLOR.text, marginBottom:10 }}>📊 {DAY_LABELS[weekDay]}曜日</div>
+                        <div style={{ fontSize:13, fontWeight:800, color:COLOR.text, marginBottom:10 }}>📊 {DAY_LABELS[weekDay]}曜日</div>
                         <NutritionBar label="エネルギー" current={sumNutrition(weeklyPlan[weekDay]).cal} target={needs?.cal || 2000} color={COLOR.accent} unit="kcal" locked={false} />
                         <NutritionBar label="タンパク質" current={sumNutrition(weeklyPlan[weekDay]).p}   target={needs?.protein || 60} color="#c4652e" unit="g" locked={false} />
                       </div>
@@ -870,8 +874,8 @@ export default function App() {
                         ))}
                       </div>
                       <div style={{ display:"flex", gap:8 }}>
-                        <button onClick={() => { const n = [...weeklyPlan]; n[weekDay] = generateDailyPlan(goalId, dislikedNames); setWeeklyPlan(n); }} style={{ flex:1, padding:"10px", borderRadius:10, border:`1.5px solid ${COLOR.border}`, background:COLOR.card, fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:FONT, color:COLOR.text }}>🔄 {DAY_LABELS[weekDay]}曜だけ</button>
-                        <button onClick={handleWeekGenerate} disabled={weekLoading} style={{ flex:1, padding:"10px", borderRadius:10, border:"none", background:COLOR.accent+"12", fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:FONT, color:COLOR.accent }}>🗓 全日再生成</button>
+                        <button onClick={() => { const n = [...weeklyPlan]; n[weekDay] = generateDailyPlan(goalId, dislikedNames); setWeeklyPlan(n); }} style={{ flex:1, padding:"10px", borderRadius:10, border:`1.5px solid ${COLOR.border}`, background:COLOR.card, fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:FONT, color:COLOR.text }}>🔄 {DAY_LABELS[weekDay]}曜だけ</button>
+                        <button onClick={handleWeekGenerate} disabled={weekLoading} style={{ flex:1, padding:"10px", borderRadius:10, border:"none", background:COLOR.accent+"12", fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:FONT, color:COLOR.accent }}>🗓 全日再生成再生成</button>
                       </div>
                     </div>
                   )}
@@ -882,17 +886,17 @@ export default function App() {
             {/* ── PY-01: アップセルバナー（改修版） ── */}
             {!isPremium && (
               <div style={{ marginTop:16, padding:"20px 16px", borderRadius:16, background:"linear-gradient(135deg,#2c2418,#4a3828)" }}>
-                <div style={{ fontSize:10, color:"#c4a882", fontWeight:700, marginBottom:6 }}>PREMIUM</div>
+                <div style={{ fontSize:11, color:"#c4a882", fontWeight:700, marginBottom:6 }}>PREMIUM</div>
                 <div style={{ fontSize:15, fontWeight:900, color:"#fff", marginBottom:4 }}>毎日の「何作ろう？」がゼロになる</div>
-                <div style={{ fontSize:11, color:"#a89880", marginBottom:10 }}>レシピ・副菜・週間献立・買い物リストが全部使える</div>
+                <div style={{ fontSize:12, color:"#a89880", marginBottom:10 }}>レシピ・副菜・週間献立・買い物リストが全部使える</div>
                 <div style={{ display:"flex", flexDirection:"column", gap:3, marginBottom:12 }}>
                   {["📝 全レシピ即表示","🥗 副菜提案＋レシピ","🙅 苦手食材 無制限","🛒 買い物リスト","📅 1週間献立","👨‍👩‍👧‍👦 家族人数調整"].map((f, i) => (
-                    <div key={i} style={{ fontSize:11, color:"#d4c4a8" }}><span style={{ color:"#e8b914" }}>✓</span> {f}</div>
+                    <div key={i} style={{ fontSize:13, color:"#d4c4a8" }}><span style={{ color:"#e8b914" }}>✓</span> {f}</div>
                   ))}
                 </div>
                 <div style={{ display:"flex", alignItems:"baseline", gap:4, marginBottom:12 }}>
                   <span style={{ fontSize:26, fontWeight:900, color:"#fff" }}>¥980</span>
-                  <span style={{ fontSize:11, color:"#a89880" }}>/月</span>
+                  <span style={{ fontSize:12, color:"#a89880" }}>/月</span>
                 </div>
                 <TrialCTA onClick={activateTrial} />
               </div>
