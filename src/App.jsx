@@ -710,7 +710,7 @@ export default function App() {
   const [loading, setLoading]       = useState(false);
   const [weekLoading, setWeekLoading] = useState(false);
   const [checked, setChecked]       = useState({});
-  const [isPremium, setIsPremium]   = useState(false);
+  const [isPremium, setIsPremium]   = useState(true); // v0.9.0: 全機能無料開放（将来課金時にfalseに戻す）
   const [servings, setServings]     = useState(1);
   const [tab, setTab]               = useState("meal");
   const [weekDay, setWeekDay]       = useState(0);
