@@ -790,8 +790,8 @@ export default function App() {
 
   return (
     <div style={{ fontFamily:FONT, background:COLOR.bg, minHeight:"100vh" }}>
-      {/* fonts in index.html */}
-      {/* keyframes in index.html */}
+      <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet" />
+      <style>{`@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}*{box-sizing:border-box}`}</style>
 
       <div style={{ maxWidth:440, margin:"0 auto", padding:"0 14px", minHeight:"100vh" }}>
         {/* ── HEADER ── */}
@@ -799,8 +799,8 @@ export default function App() {
           <div style={{ display:"flex", alignItems:"center", gap:8 }}>
             <div style={{ width:32, height:32, borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center", background:`linear-gradient(135deg,${COLOR.accent},#e8913a)`, fontSize:16 }}>🍙</div>
             <div>
-              <div style={{ fontSize:15, fontWeight:900, color:COLOR.text }}>アスメシ</div>
-              <div style={{ fontSize:9, color:COLOR.textSub }}>v0.8.1</div>
+              <div style={{ fontSize:15, fontWeight:900, color:COLOR.text }}>スポごはん</div>
+              <div style={{ fontSize:9, color:COLOR.textSub }}>v0.9.0</div>
             </div>
           </div>
           <div style={{ display:"flex", gap:5 }}>
