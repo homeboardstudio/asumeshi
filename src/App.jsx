@@ -643,7 +643,7 @@ function MealCard({ mealType, meal, emoji, isPremium, dislikedNames, onAddExtra,
                 ) : (
                   <div style={{ marginTop:4, padding:"14px 12px", borderRadius:10, background:COLOR.premium+"06", border:`1px dashed ${COLOR.premium}30`, textAlign:"center" }}>
                     <div style={{ fontSize:13, fontWeight:700, color:COLOR.premium, marginBottom:8 }}>📝 続きのレシピ＋時短コツを見る</div>
-                    <TrialCTA onClick={onTrial} label="無料で試す" />
+                    <div style={{ fontSize:12, color:COLOR.premium, opacity:0.7 }}>🔒 プレミアムで解放予定</div>
                   </div>
                 )}
               </div>
@@ -804,9 +804,10 @@ export default function App() {
             </div>
           </div>
           <div style={{ display:"flex", gap:5 }}>
-            <button onClick={() => setIsPremium(!isPremium)} style={{ padding:"5px 11px", borderRadius:16, fontSize:11, fontWeight:700, cursor:"pointer", border: isPremium ? "none" : `1px solid ${COLOR.premium}40`, fontFamily:FONT, background: isPremium ? "linear-gradient(135deg,#c49a14,#e8b914)" : "transparent", color: isPremium ? "#fff" : COLOR.premium }}>
+            {/* PREMIUM_TOGGLE: 将来復活用 — ボタン非表示 */}
+            {false && <button onClick={() => setIsPremium(!isPremium)} style={{ padding:"5px 11px", borderRadius:16, fontSize:11, fontWeight:700, cursor:"pointer", border: isPremium ? "none" : `1px solid ${COLOR.premium}40`, fontFamily:FONT, background: isPremium ? "linear-gradient(135deg,#c49a14,#e8b914)" : "transparent", color: isPremium ? "#fff" : COLOR.premium }}>
               {isPremium ? "💎 ON" : "💎 OFF"}
-            </button>
+            </button>}
             {screen === "result" && (
               <button onClick={() => { setScreen("onboarding"); setDailyPlan(null); setWeeklyPlan(null); setShowWeeklyWall(false); }} style={{ background:COLOR.warm, border:"none", padding:"5px 11px", borderRadius:8, fontSize:12, color:COLOR.textSub, cursor:"pointer", fontFamily:FONT, fontWeight:600 }}>
                 ← 戻る
@@ -874,7 +875,7 @@ export default function App() {
               {showDislikeWall && !isPremium && (
                 <div style={{ marginTop:8, padding:"12px 14px", borderRadius:12, background:COLOR.premium+"08", border:`1px solid ${COLOR.premium}20` }}>
                   <div style={{ fontSize:13, fontWeight:700, color:COLOR.premium, marginBottom:8 }}>🙅 4つ以上の食材を除外するにはプレミアムが必要です</div>
-                  <TrialCTA onClick={activateTrial} label="14日間 無料で試す" />
+                  <div style={{ fontSize:12, color:COLOR.premium, opacity:0.7 }}>🔒 プレミアムで解放予定</div>
                 </div>
               )}
             </div>
@@ -914,8 +915,8 @@ export default function App() {
               </div>
             </div>
 
-            {/* PY-02: インライン提案（初回のみ） */}
-            {!isPremium && isFirstResult && (
+            {/* PY-02: PREMIUM_CTA: 将来復活用 — 非表示 */}
+            {false && !isPremium && isFirstResult && (
               <div style={{ marginBottom:12, padding:"12px 14px", borderRadius:12, background:COLOR.accentLight, border:`1px solid ${COLOR.accent}20`, display:"flex", alignItems:"center", justifyContent:"space-between", gap:8 }}>
                 <div style={{ fontSize:12, color:COLOR.accent, fontWeight:600, lineHeight:1.5 }}>🍽️ 献立ができました！<br/>レシピも見たい場合は →</div>
                 <button onClick={activateTrial} style={{ flexShrink:0, padding:"8px 14px", borderRadius:10, border:"none", background:`linear-gradient(135deg,${COLOR.accent},#e8913a)`, color:"#fff", fontSize:11, fontWeight:800, cursor:"pointer", fontFamily:FONT, whiteSpace:"nowrap" }}>14日間 無料おためし</button>
@@ -928,7 +929,7 @@ export default function App() {
                 <div style={{ fontSize:32, marginBottom:6 }}>📅</div>
                 <div style={{ fontSize:14, fontWeight:800, color:COLOR.text, marginBottom:4 }}>1週間まとめて献立を作れます</div>
                 <div style={{ fontSize:12, color:COLOR.textSub, marginBottom:12 }}>毎日考えなくてOK。買い物リストも自動で出ます</div>
-                <TrialCTA onClick={activateTrial} label="無料で始める（14日間）" />
+                <div style={{ fontSize:12, color:COLOR.premium, opacity:0.7 }}>🔒 プレミアムで解放予定</div>
                 <button onClick={() => setShowWeeklyWall(false)} style={{ marginTop:8, background:"none", border:"none", fontSize:12, color:COLOR.textSub, cursor:"pointer", fontFamily:FONT }}>閉じる</button>
               </div>
             )}
@@ -1038,8 +1039,8 @@ export default function App() {
               </PremiumGate>
             )}
 
-            {/* ── PY-01: アップセルバナー（改修版） ── */}
-            {!isPremium && (
+            {/* PY-01: PREMIUM_BANNER: 将来復活用 — 非表示 */}
+            {false && !isPremium && (
               <div style={{ marginTop:16, padding:"20px 16px", borderRadius:16, background:"linear-gradient(135deg,#2c2418,#4a3828)" }}>
                 <div style={{ fontSize:11, color:"#c4a882", fontWeight:700, marginBottom:6 }}>PREMIUM</div>
                 <div style={{ fontSize:15, fontWeight:900, color:"#fff", marginBottom:4 }}>毎日の「何作ろう？」がゼロになる</div>
